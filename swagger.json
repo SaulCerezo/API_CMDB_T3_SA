@@ -1,0 +1,157 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "CMDB API",
+    "version": "1.0.0",
+    "description": "API RESTful para la gestión de elementos de configuración (CIs)."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api"
+    }
+  ],
+  "paths": {
+    "/cis": {
+      "get": {
+        "summary": "Obtener todos los CIs (con filtros opcionales)",
+        "parameters": [
+          { "name": "type", "in": "query", "schema": { "type": "string" } },
+          { "name": "environment", "in": "query", "schema": { "type": "string" } },
+          { "name": "current_status", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de CIs"
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo CI",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CI" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "CI creado"
+          }
+        }
+      }
+    },
+    "/cis/{id}": {
+      "get": {
+        "summary": "Obtener un CI por ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "CI encontrado" },
+          "404": { "description": "No encontrado" }
+        }
+      },
+      "put": {
+        "summary": "Actualizar un CI",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CI" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "CI actualizado" }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar un CI",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "CI eliminado" }
+        }
+      }
+    },
+    "/cis/{id}/relate": {
+      "post": {
+        "summary": "Relacionar un CI con otro",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "childId": { "type": "integer" },
+                  "relationType": { "type": "string" }
+                },
+                "required": ["childId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Relación creada" }
+        }
+      }
+    },
+    "/cis/{id}/relations": {
+      "get": {
+        "summary": "Obtener relaciones del CI",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Lista de relaciones" }
+        }
+      }
+    },
+    "/cis/{id}/changes": {
+      "get": {
+        "summary": "Ver historial de cambios del CI",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Historial de cambios" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CI": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "description": { "type": "string" },
+          "serial_number": { "type": "string" },
+          "version": { "type": "string" },
+          "acquisition_date": { "type": "string", "format": "date" },
+          "current_status": { "type": "string" },
+          "location": { "type": "string" },
+          "owner": { "type": "string" },
+          "security_level": { "type": "string" },
+          "compliance": { "type": "string" },
+          "config_status": { "type": "string" },
+          "license_number": { "type": "string" },
+          "expiry_date": { "type": "string", "format": "date" },
+          "environment": { "type": "string" }
+        },
+        "required": ["name", "type", "environment"]
+      }
+    }
+  }
+}
