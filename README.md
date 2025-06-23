@@ -3,6 +3,9 @@
 API RESTful para la gestión de Elementos de Configuración (CIs) en una CMDB, usando Node.js, Express y PostgreSQL.
 
 ---
+## Diagrama ER
+![Diagrama ER](/img/ER.svg)
+
 
 ## Tecnologías usadas
 
@@ -35,13 +38,13 @@ DB_NAME=cmdb
 
 Ejecutar el script create_cmdb.sql en tu base de datos PostgreSQL para crear las tablas iniciales.
 
-Ejecutar el servidor
+## Ejecutar el servidor
 
 ```bash
 npm run dev
 ```
 
-Endpoints
+## Endpoints
 Obtener todos los CIs (con filtros opcionales)
 
 ```bash
@@ -117,7 +120,7 @@ Ver historial de cambios de un CI
 GET /api/cis/:id/changes
 ```
 
-**Estructura del proyecto**
+## **Estructura del proyecto**
 ```arduino
 src/
 ├── app.js
