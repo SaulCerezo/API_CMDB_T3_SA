@@ -6,6 +6,9 @@ API RESTful para la gestión de Elementos de Configuración (CIs) en una CMDB, u
 ## Diagrama ER
 ![Diagrama ER](/img/ER.svg)
 
+## Ejemplo de la db con datos y endpoint funcional
+
+![DB](/img/Img1.png)
 
 ## Tecnologías usadas
 
